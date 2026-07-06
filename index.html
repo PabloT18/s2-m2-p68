@@ -31,9 +31,14 @@
         function validar() {
             const clave = document.getElementById("clave").value;
 
-            if (clave === "ups-set") {
+            if (clave === "eva-0") {
                 sessionStorage.setItem("auth", "ok");
-                window.location.href = "e1-v2-a3.html";
+                window.location.href = "e1-v2-g1-a.html";
+
+            }
+            else if (clave === "eva-1") {
+                sessionStorage.setItem("auth", "ok");
+                window.location.href = "e1-v2-g1-a.html";
 
             } else {
                 alert("Clave incorrecta");
