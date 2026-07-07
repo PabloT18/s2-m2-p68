@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1.0"
+	/>
+	<title>Guía de evaluación - Set y Map en Java</title>
+
+	<link
+		rel="stylesheet"
+		href="./css/styles.css"
+	>
+</head>
+
+<body>
+	<main
+		class="page"
+		id="practice-content"
+	>
+		<table class="guide-table">
+			<tr>
+				<td class="logo-cell">
+					<img
+						src="./assets/ups-svg-plain.svg"
+						alt="Logo UPS"
+						class="logo-img"
+					>
+				</td>
+				<td
+					colspan="4"
+					class="title-cell"
+				>
+					FORMATO DE GUÍA
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="5">&nbsp;</td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><strong>CARRERA:</strong> Computación</td>
+				<td colspan="3"><strong>ASIGNATURA:</strong> Estructura de Datos</td>
+			</tr>
+
+			<tr>
+				<td><strong>NRO. EVALUACIÓN:</strong></td>
+				<td>1</td>
+				<td colspan="3">
+					<strong>TÍTULO EVALUACIÓN:</strong> Evaluación de estructuras de datos:
+					<code>Set</code> y <code>Map</code>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="5">
+					<h3>ACTIVIDADES POR DESARROLLAR</h3>
+
+					<h4>1. Contexto de la evaluación</h4>
+
+					<p>
+						En un sistema de inventario de laboratorio se registran insumos tecnológicos disponibles para
+						prácticas académicas. Cada insumo contiene información básica sobre el código del recurso, el
+						responsable del área y la cantidad disponible en stock.
+					</p>
+
+					<p>
+						El objetivo de esta evaluación es implementar una clase controladora que procese una lista de
+						insumos usando correctamente estructuras <code>Set</code> y <code>Map</code>.
+					</p>
+
+					<p>
+						En el enunciado se entregan los nombres de los métodos y sus parámetros, pero no se entrega el
+						tipo de retorno. Se debe definir correctamente según la lógica solicitada.
+					</p>
+
+					<h4>2. Modelo base: LabSupply</h4>
+
+					<p>
+						Crear la clase <code>LabSupply</code> dentro del paquete <code>models</code>.
+						El modelo no debe ser modificado después de su creación.
+					</p>
+
+					<pre class="code-line">public class LabSupply {
+    private String code;      // Código del insumo con formato "AB-XXX-YYY" (ejemplo: IN-205-104)
+    private String manager;   // Responsable del insumo
+    private int stock;        // Cantidad disponible del insumo
+}</pre>
+
+					<h4>3. Clase a implementar: InventoryController</h4>
+
+					<p>
+						Crear la clase <code>InventoryController</code> dentro del paquete <code>controllers</code>.
+						Toda la lógica de procesamiento debe implementarse en esta clase.
+					</p>
+
+					<p>
+						No se debe cambiar el nombre de los métodos ni los parámetros recibidos.
+					</p>
+
+					<pre class="code-line">public class InventoryController {
+
+    public filterAndSortSupplies(List&lt;LabSupply&gt; supplies, int minimumStock) {
+        // Definir tipo de retorno
+        // Seleccionar la mejor implementación de la estructura correcta
+        // Implementar lógica
+    }
+
+    public groupCodesByStock(List&lt;LabSupply&gt; supplies) {
+        // Definir tipo de retorno
+        // Seleccionar la mejor implementación de la estructura correcta
+        // Implementar lógica
+    }
+}</pre>
+
+					<h4>4. Datos de referencia para pruebas</h4>
+
+					<p>
+						Se pueden usar los siguientes datos en <code>Main.java</code> para probar la solución.
+					</p>
+
+					<pre class="code-line">List&lt;LabSupply&gt; supplies = new ArrayList&lt;&gt;();
+
+supplies.add(new LabSupply("IN-205-104", "Ana Torres", 80));
+supplies.add(new LabSupply("IN-201-101", "Luis Mora", 15));
+supplies.add(new LabSupply("IN-208-108", "Carlos Vega", 45));
+supplies.add(new LabSupply("in-205-104", "Ana Torres", 80));
+supplies.add(new LabSupply("IN-203-103", "Luis Andrade", 30));
+supplies.add(new LabSupply("IN-207-107", "Mateo Rojas", 8));
+supplies.add(new LabSupply("IN-202-102", "Sofia Cordero", 55));
+supplies.add(new LabSupply("IN-206-106", "Carlos Mendez", 90));
+supplies.add(new LabSupply("IN-204-105", "Ana Molina", 20));
+// Agregar más datos según sea necesario para pruebas adicionales</pre>
+
+					<h4>5. Método A: filterAndSortSupplies</h4>
+
+					<p>
+						Implementar el método
+						<code>filterAndSortSupplies(List&lt;LabSupply&gt; supplies, int minimumStock)</code>.
+					</p>
+
+					<p>
+						Este método debe filtrar y ordenar insumos según el stock mínimo indicado.
+					</p>
+
+					<p><strong>Reglas funcionales:</strong></p>
+
+					<ul>
+						<li>Recibe una lista de insumos de laboratorio.</li>
+						<li>Recibe un número entero que representa el stock mínimo.</li>
+						<li>Solo se deben considerar insumos con stock mayor o igual al stock mínimo.</li>
+						<li>El resultado debe eliminar duplicados lógicos.</li>
+						<li>El resultado debe quedar ordenado automáticamente desde la estructura seleccionada.</li>
+					</ul>
+
+					<p><strong>Reglas de ordenamiento:</strong></p>
+
+					<ul>
+						<li>Ordenar por stock de forma descendente.</li>
+						<li>Si dos insumos tienen el mismo stock, ordenar por código de forma ascendente.</li>
+						<li>La comparación del código debe ignorar mayúsculas y minúsculas.</li>
+					</ul>
+
+					<p><strong>Regla de unicidad:</strong></p>
+
+					<ul>
+						<li>Dos insumos se consideran duplicados si tienen el mismo código ignorando mayúsculas y el
+							mismo stock.</li>
+						<li>Cuando exista un duplicado lógico, solo debe conservarse un registro.</li>
+					</ul>
+
+					<p><strong>Implementación esperada:</strong></p>
+
+					<ul>
+						<li>Debe utilizar una estructura de tipo <code>Set</code>.</li>
+						<li>La implementación seleccionada debe permitir ordenamiento automático.</li>
+						<li>El ordenamiento y la unicidad lógica deben resolverse mediante un comparador.</li>
+					</ul>
+
+					<h4>6. Método B: groupCodesByStock</h4>
+
+					<p>
+						Implementar el método
+						<code>groupCodesByStock(List&lt;LabSupply&gt; supplies)</code>.
+					</p>
+
+					<p>
+						Este método debe agrupar insumos según el rango de stock disponible.
+					</p>
+
+					<p><strong>Rangos obligatorios:</strong></p>
+
+					<ul>
+						<li><code>HIGH</code>: stock mayor o igual a 50.</li>
+						<li><code>MEDIUM</code>: stock mayor o igual a 20 y menor a 50.</li>
+						<li><code>LOW</code>: stock menor a 20.</li>
+					</ul>
+
+					<p><strong>Reglas funcionales:</strong></p>
+
+					<ul>
+						<li>El resultado debe organizarse por clave de rango de stock.</li>
+						<li>Las claves del mapa deben ser exactamente <code>HIGH</code>, <code>LOW</code> y
+							<code>MEDIUM</code>.
+						</li>
+						<li>Las claves deben mantenerse ordenadas alfabéticamente.</li>
+						<li>El valor asociado a cada clave debe contener los valores únicos de la sección
+							<code>YYY</code> del código.
+						</li>
+						<li>Se debe almacenar únicamente la sección <code>YYY</code> del código, no objetos
+							<code>LabSupply</code>.
+						</li>
+					</ul>
+
+					<p><strong>Regla de códigos:</strong></p>
+
+					<ul>
+						<li>El código tiene el formato <code>AB-XXX-YYY</code>.</li>
+						<li>Para el agrupamiento solo se debe tomar la sección <code>YYY</code>.</li>
+						<li>Si el insumo es <code>IN-205-104</code>, solo se debe almacenar <code>104</code>.</li>
+						<li>La unicidad se determina por el valor <code>YYY</code>.</li>
+						<li>Si existen valores <code>YYY</code> repetidos dentro del mismo grupo, solo se debe conservar
+							una aparición.</li>
+						<li>Los valores <code>YYY</code> dentro de cada grupo deben estar ordenados ascendentemente.
+						</li>
+					</ul>
+
+					<p><strong>Ejemplo:</strong></p>
+
+					<pre class="code-line">new LabSupply("IN-202-102", "Sofia Cordero", 55)
+new LabSupply("IN-206-106", "Carlos Mendez", 90)
+new LabSupply("in-209-102", "Ana Torres", 70)</pre>
+
+					<p>
+						En este caso, dentro del grupo <code>HIGH</code> se deben almacenar los valores
+						<code>102</code> y <code>106</code>. El valor <code>102</code> no debe repetirse.
+					</p>
+
+					<p><strong>Implementación esperada:</strong></p>
+
+					<ul>
+						<li>Debe utilizar una estructura de tipo <code>Map</code> para agrupar por rango.</li>
+						<li>Debe utilizar una estructura de tipo <code>Set</code> para evitar valores <code>YYY</code>
+							duplicados dentro de cada grupo.</li>
+						<li>El mapa debe mantener las claves ordenadas alfabéticamente.</li>
+						<li>El conjunto de valores <code>YYY</code> debe mantenerse ordenado ascendentemente.</li>
+					</ul>
+
+					<h4>7. Ejecución desde Main.java</h4>
+
+					<p>
+						Crear una clase <code>Main</code> para probar los dos métodos. El archivo
+						<code>Main.java</code> solo debe crear datos, llamar métodos y mostrar resultados.
+					</p>
+
+					<h4>8. README.md obligatorio</h4>
+
+					<p>
+						Además del código fuente, se debe entregar un archivo <code>README.md</code> con una explicación
+						técnica de las estructuras seleccionadas.
+					</p>
+
+					<p>
+						Para cada método se debe explicar:
+					</p>
+
+					<ul>
+						<li>Qué implementación de <code>Set</code> o <code>Map</code> se utilizó.</li>
+						<li>Por qué se escogió esa implementación.</li>
+						<li>Cómo se garantiza la unicidad de los datos.</li>
+						<li>Cómo se conserva o define el orden de los resultados.</li>
+						<li>Cómo funciona la lógica implementada.</li>
+					</ul>
+
+					<p>
+						El README debe contener una sección como la siguiente:
+					</p>
+
+					<pre class="code-line"># Evaluación Set y Map
+
+## Método A: filterAndSortSupplies
+
+Implementación utilizada:
+Explicación:
+
+## Método B: groupCodesByStock
+
+Implementación utilizada para el Map:
+Implementación utilizada para los Set internos:
+Explicación:</pre>
+
+					<h4>9. Reglas importantes</h4>
+
+					<ul>
+						<li>No modificar la clase <code>LabSupply</code>.</li>
+						<li>No cambiar el nombre de los métodos solicitados.</li>
+						<li>No cambiar los parámetros de los métodos solicitados.</li>
+						<li>No resolver la lógica principal dentro de <code>Main.java</code>.</li>
+						<li>No imprimir dentro de los métodos evaluados.</li>
+						<li>No usar <code>Stream API</code>.</li>
+						<li>No usar <code>Collectors</code>.</li>
+						<li>No usar librerías externas.</li>
+						<li>No usar métodos de ordenamiento de listas para reemplazar el uso de estructuras ordenadas.
+						</li>
+						<li>Los métodos deben procesar datos y retornar estructuras.</li>
+					</ul>
+
+					<h4>10. Entregables</h4>
+
+					<p>
+						Subir al AVAC únicamente el enlace al repositorio remoto que contiene el proyecto completo.
+					</p>
+
+					<ul>
+						<li>El repositorio debe incluir <code>LabSupply.java</code>.</li>
+						<li>El repositorio debe incluir <code>InventoryController.java</code>.</li>
+						<li>El repositorio debe incluir <code>Main.java</code>.</li>
+						<li>El repositorio debe incluir <code>README.md</code>.</li>
+						<li>El repositorio debe estar accesible para revisión.</li>
+					</ul>
+
+					<h4>11. Rúbrica de evaluación</h4>
+
+					<table class="rubric">
+						<thead>
+							<tr>
+								<th>Componente evaluado</th>
+								<th>Descripción</th>
+								<th>Puntaje</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Compilación correcta</td>
+								<td>El proyecto compila y ejecuta sin errores.</td>
+								<td class="center">1 pts</td>
+							</tr>
+
+							<tr>
+								<td>Método A: <code>filterAndSortSupplies</code></td>
+								<td>
+									Filtra correctamente por stock mínimo, elimina duplicados lógicos y ordena por
+									stock descendente y código ascendente ignorando mayúsculas.
+								</td>
+								<td class="center">3 pts</td>
+							</tr>
+
+							<tr>
+								<td>Método B: <code>groupCodesByStock</code></td>
+								<td>
+									Clasifica correctamente por rangos de stock, mantiene claves ordenadas, almacena
+									valores únicos de la sección <code>YYY</code> y los ordena ascendentemente dentro de
+									cada grupo.
+								</td>
+								<td class="center">4 pts</td>
+							</tr>
+
+							<tr>
+								<td>Explicación técnica en README</td>
+								<td>
+									Justifica correctamente por qué se escogió cada implementación de
+									<code>Set</code> y <code>Map</code>, explicando unicidad, ordenamiento y lógica
+									aplicada.
+								</td>
+								<td class="center">2 pts</td>
+							</tr>
+
+							<tr class="subtotal">
+								<td><strong>TOTAL</strong></td>
+								<td></td>
+								<td class="center"><strong>10 pts</strong></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<div style="text-align: center; margin: 0 auto;">
+			<p class="signature">
+				Docente: Ing. Pablo Torres
+			</p>
+		</div>
+
+		<div class="footer">
+			<span>Formato aprobado con Res. C.S. N° 076-04-2016-04-20</span>
+			<span>Página 1 de 1</span>
+		</div>
+	</main>
+
+	<script src="./js/protection.js"></script>
+	<script src="./js/protection-security-overlay.js"></script>
+
+</body>
+
+</html>
