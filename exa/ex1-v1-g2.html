@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>Examen final - Selección de estructuras en Java</title>
+
+    <link
+        rel="stylesheet"
+        href="./../css/styles.css"
+    >
+</head>
+
+<body>
+    <main
+        class="page"
+        id="practice-content"
+    >
+        <table class="guide-table">
+            <tr>
+                <td class="logo-cell">
+                    <img
+                        src="./../assets/ups-svg-plain.svg"
+                        alt="Logo UPS"
+                        class="logo-img"
+                    >
+                </td>
+                <td
+                    colspan="4"
+                    class="title-cell"
+                >
+                    FORMATO DE GUÍA
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="5">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>CARRERA:</strong> Computación</td>
+                <td colspan="3"><strong>ASIGNATURA:</strong> Estructura de Datos</td>
+            </tr>
+
+            <tr>
+                <td><strong>NRO. EVALUACIÓN:</strong></td>
+                <td>Final</td>
+                <td colspan="3">
+                    <strong>TÍTULO EVALUACIÓN:</strong>
+                    Procesamiento, ordenamiento y clasificación de objetos
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="5">
+                    <h3>ACTIVIDADES POR DESARROLLAR</h3>
+
+                    <h4>1. Contexto</h4>
+
+                    <p>
+                        Una empresa de mensajería registra envíos con código de seguimiento, destinatario,
+                        prioridad y dimensiones del paquete. Se debe implementar una clase controladora que
+                        filtre, ordene, elimine duplicados y clasifique los envíos.
+                    </p>
+
+                    <p>
+                        Se evaluará la selección de las implementaciones de colecciones más adecuadas.
+                        El enunciado define las interfaces de retorno y el orden requerido, pero no indica
+                        qué implementación concreta debe utilizarse.
+                    </p>
+
+                    <h4>2. Creación y entrega del proyecto</h4>
+
+                    <ol>
+                        <li>Crear un proyecto Java nuevo.</li>
+                        <li>Crear los paquetes <code>models</code>, <code>controllers</code> y <code>data</code>.</li>
+                        <li>Descargar el archivo <code>ShipmentData.java</code> proporcionado por el docente.</li>
+                        <li>Copiarlo sin modificaciones dentro del paquete <code>data</code>.</li>
+                        <li>Crear un repositorio personal en GitHub y subir el proyecto completo.</li>
+                        <li>Entregar en el AVAC únicamente el enlace del repositorio.</li>
+                    </ol>
+
+                    <h4>3. Modelos obligatorios</h4>
+
+                    <p>
+                        Crear la clase <code>PackageDimensions</code> dentro del paquete <code>models</code>.
+                    </p>
+
+                    <pre class="code-line">public class PackageDimensions {
+    private double length;
+    private double width;
+    private double height;
+    private double weight;
+}</pre>
+
+                    <p>
+                        Debe incluir el constructor con los cuatro atributos, sus getters y el método:
+                    </p>
+
+                    <pre class="code-line">public double getVolume()</pre>
+
+                    <p>
+                        El volumen se calcula con:
+                    </p>
+
+                    <pre class="code-line">length * width * height</pre>
+
+                    <p>
+                        Crear la clase <code>Shipment</code> dentro del paquete <code>models</code>.
+                    </p>
+
+                    <pre class="code-line">public class Shipment {
+    private String trackingCode;
+    private String recipient;
+    private PackageDimensions dimensions;
+    private int priority;
+}</pre>
+
+                    <p>
+                        Debe incluir el constructor con los cuatro atributos y sus getters.
+                        No agregar lógica de ordenamiento ni clasificación dentro de los modelos.
+                    </p>
+
+                    <h4>4. Clase a implementar: ShipmentController</h4>
+
+                    <p>
+                        Crear la clase <code>ShipmentController</code> dentro del paquete
+                        <code>controllers</code>.
+                    </p>
+
+                    <pre class="code-line">public class ShipmentController {
+
+    public Set&lt;Shipment&gt; filterAndOrderShipments(
+            List&lt;Shipment&gt; shipments,
+            double minimumVolume
+    ) {
+        // Implementar
+    }
+
+    public List&lt;Shipment&gt; classifyAndExtractShipments(
+            List&lt;Shipment&gt; shipments,
+            String requestedCategory
+    ) {
+        // Implementar
+    }
+}</pre>
+
+
+
+                    <h4>5. Método A: filterAndOrderShipments</h4>
+
+                    <p>
+                        Retornar los envíos cuyo volumen sea mayor o igual a
+                        <code>minimumVolume</code>.
+                    </p>
+
+                    <p><strong>Se peude crear metodos auxiliares</strong></p>
+
+                    <p><strong>Unicidad lógica:</strong></p>
+
+                    <ul>
+                        <li>
+                            Dos envíos son duplicados cuando tienen el mismo volumen y el mismo código
+                            ignorando mayúsculas y minúsculas.
+                        </li>
+                        <li>Solo debe conservarse una aparición.</li>
+                    </ul>
+
+                    <p><strong>Orden obligatorio:</strong></p>
+
+                    <ul>
+                        <li>Volumen descendente.</li>
+                        <li>Si el volumen es igual, código de seguimiento ascendente.</li>
+                        <li>La comparación del código debe ignorar mayúsculas y minúsculas.</li>
+                    </ul>
+
+                    <p><strong>Condiciones:</strong></p>
+
+                    <ul>
+                        <li>El resultado debe permanecer ordenado automáticamente.</li>
+                        <li>No ordenar primero una lista para después convertirla al tipo de retorno.</li>
+                        <li>La estructura concreta debe justificarse en el <code>README.md</code>.</li>
+                    </ul>
+
+                    <h4>6. Método B: classifyAndExtractShipments</h4>
+
+                    <p>
+                        Clasificar todos los envíos mediante una estructura clave-valor y retornar únicamente
+                        los objetos de la categoría solicitada en <code>requestedCategory</code>.
+                    </p>
+
+                    <p><strong>Categorías:</strong></p>
+
+                    <ul>
+                        <li>
+                            <code>BULKY</code>: volumen mayor o igual a 120000 o peso mayor o igual a 25.
+                        </li>
+                        <li>
+                            <code>REGULAR</code>: volumen mayor o igual a 30000, siempre que no sea
+                            <code>BULKY</code>.
+                        </li>
+                        <li><code>LIGHT</code>: los demás envíos.</li>
+                    </ul>
+
+                    <p><strong>Unicidad lógica:</strong></p>
+
+                    <ul>
+                        <li>
+                            Dos envíos son duplicados dentro de una categoría cuando tienen la misma prioridad
+                            y el mismo código ignorando mayúsculas y minúsculas.
+                        </li>
+                    </ul>
+
+
+                    <p><strong>Reglas del agrupamiento:</strong></p>
+
+                    <ul>
+                        <li>La clasificación completa debe construirse antes de obtener la categoría solicitada.</li>
+                        <li>Las claves deben ser exactamente <code>BULKY</code>, <code>LIGHT</code> y
+                            <code>REGULAR</code>.
+                        </li>
+                        <li>Las claves deben mantenerse ordenadas alfabéticamente.</li>
+                        <li>Cada grupo debe eliminar duplicados y mantenerse ordenado automáticamente.</li>
+                    </ul>
+
+                    <p><strong>Orden dentro de cada categoría:</strong></p>
+
+                    <ul>
+                        <li>Prioridad descendente.</li>
+                        <li>Si la prioridad es igual, código de seguimiento ascendente.</li>
+                        <li>La comparación del código debe ignorar mayúsculas y minúsculas.</li>
+                    </ul>
+
+
+                    <p><strong>Retorno:</strong></p>
+
+                    <ul>
+                        <li>Retornar una nueva lista con los objetos de la categoría solicitada.</li>
+                        <li>La categoría recibida debe procesarse ignorando espacios externos y mayúsculas.</li>
+                        <li>Si la categoría es nula o no existe, retornar una lista vacía.</li>
+                        <li>No se permite filtrar directamente solo la categoría solicitada.</li>
+                    </ul>
+
+                    <h4>7. Prueba mínima desde Main.java</h4>
+
+                    <pre class="code-line">List&lt;Shipment&gt; shipments = ShipmentData.createShipments();
+
+ShipmentController controller = new ShipmentController();
+
+Set&lt;Shipment&gt; ordered =
+        controller.filterAndOrderShipments(shipments, 50000);
+
+List&lt;Shipment&gt; bulky =
+        controller.classifyAndExtractShipments(shipments, "BULKY");
+
+System.out.println("Method A: " + ordered.size());
+System.out.println("BULKY: " + bulky.size());</pre>
+
+                    <h4>8. README.md obligatorio</h4>
+
+                    <p>
+                        Explicar para cada método:
+                    </p>
+
+                    <ul>
+                        <li>Implementaciones concretas seleccionadas.</li>
+                        <li>Razón de la selección.</li>
+                        <li>Cómo se garantiza el orden.</li>
+                        <li>Cómo se eliminan duplicados.</li>
+                        <li>Complejidad temporal principal.</li>
+                    </ul>
+
+                    <h4>9. Restricciones</h4>
+
+                    <ul>
+                        <li>No modificar <code>ShipmentData.java</code>.</li>
+                        <li>No cambiar nombres, parámetros ni tipos de retorno de los métodos.</li>
+                        <li>No implementar la lógica principal en <code>Main.java</code>.</li>
+                        <li>No imprimir dentro de los métodos evaluados.</li>
+                        <li>No usar <code>Stream API</code> ni <code>Collectors</code>.</li>
+                        <li>No usar <code>List.sort</code> ni <code>Collections.sort</code>.</li>
+                        <li>No usar librerías externas.</li>
+                    </ul>
+
+                    <h4>10. Entregables</h4>
+
+                    Las clases y archivos deberan estar en sus paquetes correspondientes y el repositorio debe contener
+                    al menos los siguientes archivos:
+                    <ul>
+                        <li><code>PackageDimensions.java</code></li>
+                        <li><code>Shipment.java</code></li>
+                        <li><code>ShipmentData.java</code></li>
+                        <li><code>ShipmentController.java</code></li>
+                        <li><code>Main.java</code></li>
+                        <li><code>README.md</code></li>
+                    </ul>
+
+                    <p>
+                        El repositorio debe contener los commits realizados durante el examen y estar accesible
+                        para revisión. Un repositorio sin código subido no será evaluado.
+                    </p>
+
+                    <h4>11. Rúbrica de evaluación</h4>
+
+                    <table class="rubric">
+                        <thead>
+                            <tr>
+                                <th>Componente evaluado</th>
+                                <th>Descripción</th>
+                                <th>Puntaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Modelos y volumen</td>
+                                <td>
+                                    Implementa correctamente los modelos, la composición de objetos y el cálculo
+                                    del volumen.
+                                </td>
+                                <td class="center">0.5 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Método A</td>
+                                <td>
+                                    Filtra, ordena y elimina duplicados según todas las reglas indicadas.
+                                </td>
+                                <td class="center">3 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Método B</td>
+                                <td>
+                                    Construye la clasificación completa, conserva el orden requerido y retorna
+                                    únicamente la categoría solicitada.
+                                </td>
+                                <td class="center">4 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Selección y explicación técnica</td>
+                                <td>
+                                    Escoge implementaciones adecuadas y justifica orden, unicidad y complejidad
+                                    en el README.
+                                </td>
+                                <td class="center">2 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Proyecto y entrega</td>
+                                <td>
+                                    El proyecto compila, contiene los archivos solicitados y está disponible en GitHub.
+                                </td>
+                                <td class="center">0.5 pts</td>
+                            </tr>
+                            <tr class="subtotal">
+                                <td><strong>TOTAL</strong></td>
+                                <td></td>
+                                <td class="center"><strong>10 pts</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; margin: 0 auto;">
+            <p class="signature">
+                Docente: Ing. Pablo Torres
+            </p>
+        </div>
+
+        <div class="footer">
+            <span>Formato aprobado con Res. C.S. N° 076-04-2016-04-20</span>
+            <span>Página 1 de 1</span>
+        </div>
+    </main>
+    <script src="./../js/protection.js"></script>
+    <script src="./../js/protection-security-overlay.js"></script>
+
+
+</body>
+
+</html>

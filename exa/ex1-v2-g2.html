@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>Examen final versión B - Selección de estructuras en Java</title>
+    <link
+        rel="stylesheet"
+        href="./../css/styles.css"
+    >
+</head>
+
+<body>
+    <main
+        class="page"
+        id="practice-content"
+    >
+        <table class="guide-table">
+            <tr>
+                <td class="logo-cell"><img
+                        src="./../assets/ups-svg-plain.svg"
+                        alt="Logo UPS"
+                        class="logo-img"
+                    ></td>
+                <td
+                    colspan="4"
+                    class="title-cell"
+                >FORMATO DE GUÍA</td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>CARRERA:</strong> Computación</td>
+                <td colspan="3"><strong>ASIGNATURA:</strong> Estructura de Datos</td>
+            </tr>
+            <tr>
+                <td><strong>NRO. EVALUACIÓN:</strong></td>
+                <td>Final - Versión B</td>
+                <td colspan="3"><strong>TÍTULO EVALUACIÓN:</strong> Procesamiento, ordenamiento y clasificación de
+                    objetos</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <h3>ACTIVIDADES POR DESARROLLAR</h3>
+
+                    <h4>1. Contexto</h4>
+                    <p>Una empresa de desarrollo registra proyectos de software con código, nombre, prioridad y métricas
+                        de planificación. Se debe implementar una clase controladora que filtre, ordene, elimine
+                        duplicados y clasifique los proyectos.</p>
+                    <p>Se evaluará la selección de las implementaciones de colecciones más adecuadas. El enunciado
+                        define las interfaces de retorno y el orden requerido, pero no indica qué implementación
+                        concreta debe utilizarse.</p>
+
+                    <h4>2. Creación y entrega del proyecto</h4>
+                    <ol>
+                        <li>Crear un proyecto Java nuevo.</li>
+                        <li>Crear los paquetes <code>models</code>, <code>controllers</code> y <code>data</code>.</li>
+                        <li>Descargar el archivo <code>ProjectData.java</code> proporcionado por el docente.</li>
+                        <li>Copiarlo sin modificaciones dentro del paquete <code>data</code>.</li>
+                        <li>Crear un repositorio personal en GitHub y subir el proyecto completo.</li>
+                        <li>Entregar en el AVAC únicamente el enlace del repositorio.</li>
+                    </ol>
+
+                    <h4>3. Modelos obligatorios</h4>
+                    <p>Crear la clase <code>ProjectMetrics</code> dentro del paquete <code>models</code>.</p>
+                    <pre class="code-line">public class ProjectMetrics {
+    private double estimatedHours;
+    private int teamSize;
+    private int completedTasks;
+    private int pendingTasks;
+}</pre>
+                    <p>Debe incluir el constructor con los cuatro atributos, sus getters y el método:</p>
+                    <pre class="code-line">public double getWorkload()</pre>
+                    <p>La carga de trabajo se calcula con:</p>
+                    <pre class="code-line">estimatedHours * teamSize</pre>
+
+                    <p>Crear la clase <code>SoftwareProject</code> dentro del paquete <code>models</code>.</p>
+                    <pre class="code-line">public class SoftwareProject {
+    private String projectCode;
+    private String projectName;
+    private ProjectMetrics metrics;
+    private int priority;
+}</pre>
+                    <p>Debe incluir el constructor con los cuatro atributos y sus getters. No agregar lógica de
+                        ordenamiento ni clasificación dentro de los modelos.</p>
+
+                    <h4>4. Clase a implementar: ProjectController</h4>
+                    <p>Crear la clase <code>ProjectController</code> dentro del paquete <code>controllers</code>.</p>
+                    <pre class="code-line">public class ProjectController {
+
+    public Set&lt;SoftwareProject&gt; filterAndOrderProjects(
+            List&lt;SoftwareProject&gt; projects,
+            double minimumWorkload
+    ) {
+        // Implementar
+    }
+
+    public List&lt;SoftwareProject&gt; classifyAndExtractProjects(
+            List&lt;SoftwareProject&gt; projects,
+            String requestedCategory
+    ) {
+        // Implementar
+    }
+}</pre>
+
+                    <h4>5. Método A: filterAndOrderProjects</h4>
+                    <p>Retornar los proyectos cuya carga de trabajo sea mayor o igual a <code>minimumWorkload</code>.
+                    </p>
+                    <p><strong>Se pueden crear métodos auxiliares.</strong></p>
+                    <p><strong>Unicidad lógica:</strong></p>
+                    <ul>
+                        <li>Dos proyectos son duplicados cuando tienen la misma carga de trabajo y el mismo código
+                            ignorando mayúsculas y minúsculas.</li>
+                        <li>Solo debe conservarse una aparición.</li>
+                    </ul>
+                    <p><strong>Orden obligatorio:</strong></p>
+                    <ul>
+                        <li>Carga de trabajo descendente.</li>
+                        <li>Si la carga de trabajo es igual, código del proyecto ascendente.</li>
+                        <li>La comparación del código debe ignorar mayúsculas y minúsculas.</li>
+                    </ul>
+                    <p><strong>Condiciones:</strong></p>
+                    <ul>
+                        <li>El resultado debe permanecer ordenado automáticamente.</li>
+                        <li>No ordenar primero una lista para después convertirla al tipo de retorno.</li>
+                        <li>La estructura concreta debe justificarse en el <code>README.md</code>.</li>
+                    </ul>
+
+                    <h4>6. Método B: classifyAndExtractProjects</h4>
+                    <p>Clasificar todos los proyectos mediante una estructura clave-valor y retornar únicamente los
+                        objetos de la categoría solicitada en <code>requestedCategory</code>.</p>
+                    <p><strong>Categorías:</strong></p>
+                    <ul>
+                        <li><code>CRITICAL</code>: carga de trabajo mayor o igual a 900 o cantidad de tareas pendientes
+                            mayor o igual a 18.</li>
+                        <li><code>STANDARD</code>: carga de trabajo mayor o igual a 350, siempre que no sea
+                            <code>CRITICAL</code>.</li>
+                        <li><code>SMALL</code>: los demás proyectos.</li>
+                    </ul>
+                    <p><strong>Unicidad lógica:</strong></p>
+                    <ul>
+                        <li>Dos proyectos son duplicados dentro de una categoría cuando tienen la misma prioridad y el
+                            mismo código ignorando mayúsculas y minúsculas.</li>
+                    </ul>
+                    <p><strong>Reglas del agrupamiento:</strong></p>
+                    <ul>
+                        <li>La clasificación completa debe construirse antes de obtener la categoría solicitada.</li>
+                        <li>Las claves deben ser exactamente <code>CRITICAL</code>, <code>SMALL</code> y
+                            <code>STANDARD</code>.</li>
+                        <li>Las claves deben mantenerse ordenadas alfabéticamente.</li>
+                        <li>Cada grupo debe eliminar duplicados y mantenerse ordenado automáticamente.</li>
+                    </ul>
+                    <p><strong>Orden dentro de cada categoría:</strong></p>
+                    <ul>
+                        <li>Prioridad descendente.</li>
+                        <li>Si la prioridad es igual, código del proyecto ascendente.</li>
+                        <li>La comparación del código debe ignorar mayúsculas y minúsculas.</li>
+                    </ul>
+                    <p><strong>Retorno:</strong></p>
+                    <ul>
+                        <li>Retornar una nueva lista con los objetos de la categoría solicitada.</li>
+                        <li>La categoría recibida debe procesarse ignorando espacios externos y mayúsculas.</li>
+                        <li>Si la categoría es nula o no existe, retornar una lista vacía.</li>
+                        <li>No se permite filtrar directamente solo la categoría solicitada.</li>
+                    </ul>
+
+                    <h4>7. Prueba mínima desde Main.java</h4>
+                    <pre class="code-line">List&lt;SoftwareProject&gt; projects = ProjectData.createProjects();
+
+ProjectController controller = new ProjectController();
+
+Set&lt;SoftwareProject&gt; ordered =
+        controller.filterAndOrderProjects(projects, 500);
+
+List&lt;SoftwareProject&gt; critical =
+        controller.classifyAndExtractProjects(projects, "CRITICAL");
+
+System.out.println("Method A: " + ordered.size());
+System.out.println("CRITICAL: " + critical.size());</pre>
+
+                    <h4>8. README.md obligatorio</h4>
+                    <p>Explicar para cada método:</p>
+                    <ul>
+                        <li>Implementaciones concretas seleccionadas.</li>
+                        <li>Razón de la selección.</li>
+                        <li>Cómo se garantiza el orden.</li>
+                        <li>Cómo se eliminan duplicados.</li>
+                        <li>Complejidad temporal principal.</li>
+                    </ul>
+
+                    <h4>9. Restricciones</h4>
+                    <ul>
+                        <li>No modificar <code>ProjectData.java</code>.</li>
+                        <li>No cambiar nombres, parámetros ni tipos de retorno de los métodos.</li>
+                        <li>No implementar la lógica principal en <code>Main.java</code>.</li>
+                        <li>No imprimir dentro de los métodos evaluados.</li>
+                        <li>No usar <code>Stream API</code> ni <code>Collectors</code>.</li>
+                        <li>No usar <code>List.sort</code> ni <code>Collections.sort</code>.</li>
+                        <li>No usar librerías externas.</li>
+                    </ul>
+
+                    <h4>10. Entregables</h4>
+                    <p>Las clases y archivos deberán estar en sus paquetes correspondientes y el repositorio debe
+                        contener al menos los siguientes archivos:</p>
+                    <ul>
+                        <li><code>ProjectMetrics.java</code></li>
+                        <li><code>SoftwareProject.java</code></li>
+                        <li><code>ProjectData.java</code></li>
+                        <li><code>ProjectController.java</code></li>
+                        <li><code>Main.java</code></li>
+                        <li><code>README.md</code></li>
+                    </ul>
+                    <p>El repositorio debe contener los commits realizados durante el examen y estar accesible para
+                        revisión. Un repositorio sin código subido no será evaluado.</p>
+
+                    <h4>11. Rúbrica de evaluación</h4>
+                    <table class="rubric">
+                        <thead>
+                            <tr>
+                                <th>Componente evaluado</th>
+                                <th>Descripción</th>
+                                <th>Puntaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Modelos y carga de trabajo</td>
+                                <td>Implementa correctamente los modelos, la composición de objetos y el cálculo de la
+                                    carga de trabajo.</td>
+                                <td class="center">0.5 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Método A</td>
+                                <td>Filtra, ordena y elimina duplicados según todas las reglas indicadas.</td>
+                                <td class="center">3 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Método B</td>
+                                <td>Construye la clasificación completa, conserva el orden requerido y retorna
+                                    únicamente la categoría solicitada.</td>
+                                <td class="center">4 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Selección y explicación técnica</td>
+                                <td>Escoge implementaciones adecuadas y justifica orden, unicidad y complejidad en el
+                                    README.</td>
+                                <td class="center">2 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Proyecto y entrega</td>
+                                <td>El proyecto compila, contiene los archivos solicitados y está disponible en GitHub.
+                                </td>
+                                <td class="center">0.5 pts</td>
+                            </tr>
+                            <tr class="subtotal">
+                                <td><strong>TOTAL</strong></td>
+                                <td></td>
+                                <td class="center"><strong>10 pts</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center; margin: 0 auto;">
+            <p class="signature">Docente: Ing. Pablo Torres</p>
+        </div>
+        <div class="footer"><span>Formato aprobado con Res. C.S. N° 076-04-2016-04-20</span><span>Página 1 de 1</span>
+        </div>
+    </main>
+    <script src="./../js/protection.js"></script>
+    <script src="./../js/protection-security-overlay.js"></script>
+</body>
+
+</html>
