@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>Examen Final - EST</title>
+    <link
+        rel="stylesheet"
+        href="./../css/styles.css"
+    >
+</head>
+
+<body>
+    <main
+        class="page"
+        id="practice-content"
+    >
+        <table class="guide-table">
+            <tr>
+                <td class="logo-cell"><img
+                        src="./../assets/ups-svg-plain.svg"
+                        alt="Logo UPS"
+                        class="logo-img"
+                    ></td>
+                <td
+                    colspan="4"
+                    class="title-cell"
+                >Examen Final - Estructuras de Datos</td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>CARRERA:</strong> Computación</td>
+                <td colspan="3"><strong>ASIGNATURA:</strong> Estructura de Datos</td>
+            </tr>
+            <tr>
+                <td><strong>NRO. EVALUACIÓN:</strong></td>
+                <td>Final - Versión C</td>
+                <td colspan="3"><strong>TÍTULO EVALUACIÓN:</strong> Procesamiento, ordenamiento y clasificación de
+                    objetos</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <h3>ACTIVIDADES POR DESARROLLAR</h3>
+
+                    <h4>1. Contexto</h4>
+                    <p>El departamento de infraestructura tecnológica registra solicitudes de mantenimiento con código,
+                        nombre del equipo, urgencia y métricas de atención. Se debe implementar una clase controladora
+                        que filtre, ordene, elimine duplicados y clasifique las solicitudes.</p>
+                    <p>Se evaluará la selección de las implementaciones de colecciones más adecuadas. El enunciado
+                        define las interfaces de retorno y el orden requerido, pero no indica qué implementación
+                        concreta debe utilizarse.</p>
+
+                    <h4>2. Creación y entrega del proyecto</h4>
+
+                    <ol>
+                        <li>
+                            Ingresar al enlace del repositorio proporcionado en las instrucciones del AVAC.
+                        </li>
+                        <li>
+                            Realizar un <strong>fork</strong> del repositorio en su cuenta personal de GitHub.
+                        </li>
+                        <li>
+                            Clonar el repositorio generado desde su cuenta personal. Usando el VS Code mediante el
+                            enlace del AVAC
+                        </li>
+                        <li>
+                            Crear dentro de <code>src</code> los siguientes paquetes:
+                            <code>models</code> y <code>controllers</code>.
+                        </li>
+                        <li>
+                            Implementar las clases y métodos solicitados en los paquetes correspondientes.
+                        </li>
+
+                        <li>
+                            Al finalizar el desarrollo, realizar un commit con el mensaje exacto:
+                            <code>Examen finalizado</code>.
+                        </li>
+                        <li>
+                            Hacer push y verificar que el repositorio esté disponible para su revisión.
+                        </li>
+                        <li>
+                            Entregar en el AVAC únicamente el enlace del repositorio personal de GitHub.
+                        </li>
+                    </ol>
+
+                    <h4>3. Modelos obligatorios</h4>
+                    <p>Crear la clase <code>MaintenanceMetrics</code> dentro del paquete <code>models</code>.</p>
+                    <pre class="code-line">public class MaintenanceMetrics {
+    private double estimatedHours;
+    private int affectedDevices;
+    private int completedChecks;
+    private int pendingChecks;
+}</pre>
+                    <p>Debe incluir el constructor con los cuatro atributos, sus getters y el método:</p>
+                    <pre class="code-line">public double getImpact()</pre>
+                    <p>El impacto se calcula con:</p>
+                    <pre class="code-line">estimatedHours * affectedDevices</pre>
+
+                    <p>Crear la clase <code>MaintenanceRequest</code> dentro del paquete <code>models</code>.</p>
+                    <pre class="code-line">public class MaintenanceRequest {
+    private String requestCode;
+    private String equipmentName;
+    private MaintenanceMetrics metrics;
+    private int urgency;
+}</pre>
+                    <p>Debe incluir el constructor con los cuatro atributos y sus getters. No agregar lógica de
+                        ordenamiento ni clasificación dentro de los modelos.</p>
+
+                    <h4>4. Clase a implementar: MaintenanceController</h4>
+                    <p>Crear la clase <code>MaintenanceController</code> dentro del paquete <code>controllers</code>.
+                    </p>
+                    <pre class="code-line">public class MaintenanceController {
+
+    public Set&lt;MaintenanceRequest&gt; filterAndOrderRequests(
+            List&lt;MaintenanceRequest&gt; requests,
+            double maximumImpact
+    ) {
+        // Implementar
+    }
+
+    public List&lt;MaintenanceRequest&gt; classifyAndExtractRequests(
+            List&lt;MaintenanceRequest&gt; requests,
+            String requestedCategory
+    ) {
+        // Implementar
+    }
+}</pre>
+
+                    <h4>5. Método A: filterAndOrderRequests</h4>
+                    <p>Retornar las solicitudes cuyo impacto sea menor o igual a <code>maximumImpact</code>.</p>
+                    <p><strong>Se pueden crear métodos auxiliares.</strong></p>
+                    <p><strong>Unicidad lógica:</strong></p>
+                    <ul>
+                        <li>Dos solicitudes son duplicadas cuando tienen el mismo impacto, la misma urgencia y el mismo
+                            código ignorando mayúsculas y minúsculas.</li>
+                        <li>Solo debe conservarse una aparición.</li>
+                    </ul>
+                    <p><strong>Orden obligatorio:</strong></p>
+                    <ul>
+                        <li>Impacto ascendente.</li>
+                        <li>Si el impacto es igual, urgencia descendente.</li>
+                        <li>Si el impacto y la urgencia son iguales, código de solicitud descendente.</li>
+                        <li>La comparación del código debe ignorar mayúsculas y minúsculas.</li>
+                    </ul>
+                    <p><strong>Condiciones:</strong></p>
+                    <ul>
+                        <li>El resultado debe permanecer ordenado automáticamente.</li>
+                        <li>No ordenar primero una lista para después convertirla al tipo de retorno.</li>
+                        <li>La estructura concreta debe justificarse en el <code>README.md</code>.</li>
+                    </ul>
+
+                    <h4>6. Método B: classifyAndExtractRequests</h4>
+                    <p>Clasificar todas las solicitudes mediante una estructura clave-valor y retornar únicamente los
+                        objetos de la categoría solicitada en <code>requestedCategory</code>.</p>
+                    <p><strong>Categorías:</strong></p>
+                    <ul>
+                        <li><code>URGENT</code>: urgencia mayor o igual a 5 o revisiones pendientes mayor o igual a 18.
+                        </li>
+                        <li><code>PLANNED</code>: impacto mayor o igual a 700, siempre que no sea <code>URGENT</code>.
+                        </li>
+                        <li><code>ROUTINE</code>: las demás solicitudes.</li>
+                    </ul>
+                    <p><strong>Unicidad lógica:</strong></p>
+                    <ul>
+                        <li>Dos solicitudes son duplicadas dentro de una categoría cuando tienen la misma cantidad de
+                            revisiones pendientes, el mismo impacto y el mismo código ignorando mayúsculas y minúsculas.
+                        </li>
+                    </ul>
+                    <p><strong>Reglas del agrupamiento:</strong></p>
+                    <ul>
+                        <li>La clasificación completa debe construirse antes de obtener la categoría solicitada.</li>
+                        <li>Las claves deben ser exactamente <code>PLANNED</code>, <code>ROUTINE</code> y
+                            <code>URGENT</code>.
+                        </li>
+                        <li>Las claves deben mantenerse en orden alfabético descendente.</li>
+                        <li>Cada grupo debe eliminar duplicados y mantenerse ordenado automáticamente.</li>
+                    </ul>
+                    <p><strong>Orden dentro de cada categoría:</strong></p>
+                    <ul>
+                        <li>Revisiones pendientes ascendentes.</li>
+                        <li>Si las revisiones pendientes son iguales, impacto descendente.</li>
+                        <li>Si ambos valores son iguales, código de solicitud ascendente.</li>
+                        <li>La comparación del código debe ignorar mayúsculas y minúsculas.</li>
+                    </ul>
+                    <p><strong>Retorno:</strong></p>
+                    <ul>
+                        <li>Retornar una nueva lista con los objetos de la categoría solicitada.</li>
+                        <li>La categoría recibida debe procesarse ignorando espacios externos y mayúsculas.</li>
+                        <li>Si la categoría es nula o no existe, retornar una lista vacía.</li>
+                        <li>No se permite filtrar directamente solo la categoría solicitada.</li>
+                    </ul>
+
+                    <h4>7. Prueba mínima desde Main.java</h4>
+
+                    <div class="code-copy-container">
+                        <button
+                            type="button"
+                            class="copy-code-button"
+                            onclick="copyCode(this)"
+                        >
+                            Copiar código
+                        </button>
+
+                        <pre class="code-line"><code>List&lt;MaintenanceRequest&gt; requests = MaintenanceData.createRequests();
+
+MaintenanceController controller = new MaintenanceController();
+
+Set&lt;MaintenanceRequest&gt; ordered =
+        controller.filterAndOrderRequests(requests, 600);
+
+List&lt;MaintenanceRequest&gt; urgent =
+        controller.classifyAndExtractRequests(requests, "URGENT");
+
+System.out.println("Method A: " + ordered.size());
+System.out.println("URGENT: " + urgent.size());</code></pre>
+                    </div>
+
+                    <h4>8. README.md obligatorio</h4>
+
+
+
+                    <p>Explicar para método 1:</p>
+
+                    <ol>
+                        <li>Eliminación de duplicados</li>
+                        <li>Garantía del orden</li>
+                        <li>Complejidad temporal</li>
+                    </ol>
+
+                    <p>Explicar para método 1:</p>
+
+                    <ol>
+                        <li>Implementación concreta seleccionada para la estructura de datos utilizada</li>
+                        <li>Implementación concreta seleccionada para los grupos</li>
+                        <li>Complejidad temporal</li>
+                    </ol>
+
+
+                    <p>En el archivo READEM del proyecto estara la estructura y formato y a mayor detalle</p>
+
+
+
+                    <h4>9. Restricciones</h4>
+                    <ul>
+                        <li>No modificar <code>MaintenanceData.java</code>.</li>
+                        <li>No cambiar nombres, parámetros ni tipos de retorno de los métodos.</li>
+                        <li>No implementar la lógica principal en <code>Main.java</code>.</li>
+
+                        <li>No usar <code>Stream API</code> ni <code>Collectors</code>.</li>
+                        <li>No usar <code>List.sort</code> ni <code>Collections.sort</code>.</li>
+                        <li>No usar librerías externas.</li>
+
+                    </ul>
+
+                    <h4>10. Entregables</h4>
+                    <p>Las clases y archivos deberán estar en sus paquetes correspondientes y el repositorio debe
+                        contener al menos los siguientes archivos:</p>
+                    <ul>
+                        <li><code>MaintenanceMetrics.java</code></li>
+                        <li><code>MaintenanceRequest.java</code></li>
+                        <li><code>MaintenanceData.java</code></li>
+                        <li><code>MaintenanceController.java</code></li>
+                        <li><code>Main.java</code></li>
+                        <li><code>README.md</code></li>
+                    </ul>
+                    <p>El repositorio debe contener los commits realizados durante el examen y estar accesible para
+                        revisión. Un repositorio sin código subido no será evaluado.</p>
+
+                    <h4>11. Rúbrica de evaluación</h4>
+                    <p>* Regla de 3 a 30pts</p>
+                    <table class="rubric">
+                        <thead>
+                            <tr>
+                                <th>Componente evaluado</th>
+                                <th>Descripción</th>
+                                <th>Puntaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Modelos e impacto</td>
+                                <td>Implementa correctamente los modelos, la composición de objetos y el cálculo del
+                                    impacto.</td>
+                                <td class="center">0.5 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Método A</td>
+                                <td>Filtra, ordena y elimina duplicados según todas las reglas indicadas.</td>
+                                <td class="center">3 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Método B</td>
+                                <td>Construye la clasificación completa, conserva el orden requerido y retorna
+                                    únicamente la categoría solicitada.</td>
+                                <td class="center">4 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Selección y explicación técnica</td>
+                                <td>Escoge implementaciones adecuadas y justifica orden, unicidad y complejidad en el
+                                    README.</td>
+                                <td class="center">2 pts</td>
+                            </tr>
+                            <tr>
+                                <td>Proyecto y entrega</td>
+                                <td>El proyecto compila, contiene los archivos solicitados y está disponible en GitHub.
+                                </td>
+                                <td class="center">0.5 pts</td>
+                            </tr>
+                            <tr class="subtotal">
+                                <td><strong>TOTAL</strong></td>
+                                <td></td>
+                                <td class="center"><strong>10 pts</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </td>
+            </tr>
+        </table>
+
+
+        <div style="text-align: center; margin: 0 auto;">
+            <p class="signature">Docente: Ing. Pablo Torres</p>
+        </div>
+        <div class="footer"><span>Formato aprobado con Res. C.S. N° 076-04-2016-04-20</span><span>Página 1 de 1</span>
+        </div>
+    </main>
+    <script src="./../js/copy-code.js"></script>
+    <script src="./../js/protection.js"></script>
+    <script src="./../js/protection-security-overlay.js"></script>
+</body>
+
+</html>
