@@ -250,6 +250,40 @@ System.out.println("Method A: " + ordered.size());
 System.out.println("URGENT: " + urgent.size());</code></pre>
                     </div>
 
+
+                    <h5>Ejecución</h5>
+
+                    <p>Compilar todo el proyecto Java con las librerías JAR ubicadas en <code>lib</code>:</p>
+
+                    <div class="code-copy-container">
+                        <button
+                            type="button"
+                            class="copy-code-button"
+                            onclick="copyCode(this)"
+                        >
+                            Copiar código
+                        </button>
+
+                        <pre class="code-line"><code class="language-bash">mkdir -p bin
+find src -name "*.java" -print0 \
+  | xargs -0 javac --release 17 -cp "lib/*" -d bin</code></pre>
+                    </div>
+
+                    <p>Ejecutar la clase principal:</p>
+
+                    <div class="code-copy-container">
+                        <button
+                            type="button"
+                            class="copy-code-button"
+                            onclick="copyCode(this)"
+                        >
+                            Copiar código
+                        </button>
+
+                        <pre
+                            class="code-line"><code class="language-bash">java -cp "bin:lib/*" paquete.Main</code></pre>
+                    </div>
+
                     <h4>8. README.md obligatorio</h4>
 
 
