@@ -256,7 +256,8 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
                     <h5>Ejecución</h5>
 
                     <p>Compilar la clase principal, los modelos, los datos y el controlador en la carpeta
-                        <code>bin</code>:</p>
+                        <code>bin</code>:
+                    </p>
 
                     <div class="code-copy-container">
                         <button
@@ -275,6 +276,23 @@ javac --release 17 -d bin \
     src/data/MaintenanceData.java \
     src/controllers/MaintenanceController.java \
     src/Main.java</code></pre>
+                    </div>
+                    <div class="code-copy-container">
+                        <button
+                            type="button"
+                            class="copy-code-button"
+                            onclick="copyCode(this)"
+                        >
+                            Copiar código
+                        </button>
+
+                        <pre class="code-line"><code class="language-bash">mkdir -p bin
+
+javac --release 17 -d bin \
+    src/*.java \
+    src/controllers/*.java \
+    src/data/*.java \
+    src/models/*.java</code></pre>
                     </div>
 
                     <p>Ejecutar la clase principal:</p>
