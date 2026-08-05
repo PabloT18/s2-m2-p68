@@ -268,14 +268,10 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
                             Copiar código
                         </button>
 
-                        <pre class="code-line"><code class="language-bash">mkdir -p bin
+                        <pre
+                            class="code-line"><code class="language-bash">mkdir -p bin
 
-javac --release 17 -d bin \
-    src/models/MaintenanceRequest.java \
-    src/models/MaintenanceMetrics.java \
-    src/data/MaintenanceData.java \
-    src/controllers/MaintenanceController.java \
-    src/Main.java</code></pre>
+javac --release 17 -d bin src/models/MaintenanceRequest.java src/models/MaintenanceMetrics.java src/data/MaintenanceData.java src/controllers/MaintenanceController.java src/Main.java</code></pre>
                     </div>
                     <div class="code-copy-container">
                         <button
@@ -288,11 +284,7 @@ javac --release 17 -d bin \
 
                         <pre class="code-line"><code class="language-bash">mkdir -p bin
 
-javac --release 17 -d bin \
-    src/*.java \
-    src/controllers/*.java \
-    src/data/*.java \
-    src/models/*.java</code></pre>
+javac --release 17 -d bin src/*.java src/controllers/*.java src/data/*.java src/models/*.java</code></pre>
                     </div>
 
                     <p>Ejecutar la clase principal:</p>
