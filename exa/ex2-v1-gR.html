@@ -91,30 +91,52 @@
 
                     <h4>3. Modelos obligatorios</h4>
                     <p>Crear la clase <code>MaintenanceMetrics</code> dentro del paquete <code>models</code>.</p>
-                    <pre class="code-line">public class MaintenanceMetrics {
+                    <div class="code-copy-container">
+                        <button
+                            type="button"
+                            class="copy-code-button"
+                            onclick="copyCode(this)"
+                        >
+                            Copiar código
+                        </button>
+                        <pre class="code-line"><code>public class MaintenanceMetrics {
     private double estimatedHours;
     private int affectedDevices;
     private int completedChecks;
     private int pendingChecks;
-}</pre>
+                    }</code></pre>
+                    </div>
+
                     <p>Debe incluir el constructor con los cuatro atributos, sus getters y el método:</p>
                     <pre class="code-line">public double getImpact()</pre>
                     <p>El impacto se calcula con:</p>
                     <pre class="code-line">estimatedHours * affectedDevices</pre>
 
-                    <p>Crear la clase <code>MaintenanceRequest</code> dentro del paquete <code>models</code>.</p>
-                    <pre class="code-line">public class MaintenanceRequest {
+                    <p>Crear la clase <code>MaintenanceRequest</code> dentro del paquete <code>models</code>.
+                    </p>
+                    <div class="code-copy-container">
+                        <button
+                            type="button"
+                            class="copy-code-button"
+                            onclick="copyCode(this)"
+                        >
+                            Copiar código
+                        </button>
+                        <pre class="code-line"><code>public class MaintenanceRequest {
     private String requestCode;
     private String equipmentName;
     private MaintenanceMetrics metrics;
     private int urgency;
-}</pre>
+}</code></pre>
+                    </div>
                     <p>Debe incluir el constructor con los cuatro atributos y sus getters. No agregar lógica de
                         ordenamiento ni clasificación dentro de los modelos.</p>
 
                     <h4>4. Clase a implementar: MaintenanceController</h4>
-                    <p>Crear la clase <code>MaintenanceController</code> dentro del paquete <code>controllers</code>.
+                    <p>Crear la clase <code>MaintenanceController</code> dentro del paquete
+                        <code>controllers</code>.
                     </p>
+
                     <pre class="code-line">public class MaintenanceController {
 
     public Set&lt;MaintenanceRequest&gt; filterAndOrderRequests(
@@ -137,7 +159,8 @@
                     <p><strong>Se pueden crear métodos auxiliares.</strong></p>
                     <p><strong>Unicidad lógica:</strong></p>
                     <ul>
-                        <li>Dos solicitudes son duplicadas cuando tienen el mismo impacto, la misma urgencia y el mismo
+                        <li>Dos solicitudes son duplicadas cuando tienen el mismo impacto, la misma urgencia y
+                            el mismo
                             código ignorando mayúsculas y minúsculas.</li>
                         <li>Solo debe conservarse una aparición.</li>
                     </ul>
@@ -156,25 +179,31 @@
                     </ul>
 
                     <h4>6. Método B: classifyAndExtractRequests</h4>
-                    <p>Clasificar todas las solicitudes mediante una estructura clave-valor y retornar únicamente los
+                    <p>Clasificar todas las solicitudes mediante una estructura clave-valor y retornar
+                        únicamente los
                         objetos de la categoría solicitada en <code>requestedCategory</code>.</p>
                     <p><strong>Categorías:</strong></p>
                     <ul>
-                        <li><code>URGENT</code>: urgencia mayor o igual a 5 o revisiones pendientes mayor o igual a 18.
+                        <li><code>URGENT</code>: urgencia mayor o igual a 5 o revisiones pendientes mayor o
+                            igual a 18.
                         </li>
-                        <li><code>PLANNED</code>: impacto mayor o igual a 700, siempre que no sea <code>URGENT</code>.
+                        <li><code>PLANNED</code>: impacto mayor o igual a 700, siempre que no sea
+                            <code>URGENT</code>.
                         </li>
                         <li><code>ROUTINE</code>: las demás solicitudes.</li>
                     </ul>
                     <p><strong>Unicidad lógica:</strong></p>
                     <ul>
-                        <li>Dos solicitudes son duplicadas dentro de una categoría cuando tienen la misma cantidad de
-                            revisiones pendientes, el mismo impacto y el mismo código ignorando mayúsculas y minúsculas.
+                        <li>Dos solicitudes son duplicadas dentro de una categoría cuando tienen la misma
+                            cantidad de
+                            revisiones pendientes, el mismo impacto y el mismo código ignorando mayúsculas y
+                            minúsculas.
                         </li>
                     </ul>
                     <p><strong>Reglas del agrupamiento:</strong></p>
                     <ul>
-                        <li>La clasificación completa debe construirse antes de obtener la categoría solicitada.</li>
+                        <li>La clasificación completa debe construirse antes de obtener la categoría solicitada.
+                        </li>
                         <li>Las claves deben ser exactamente <code>PLANNED</code>, <code>ROUTINE</code> y
                             <code>URGENT</code>.
                         </li>
@@ -259,7 +288,8 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
                     </ul>
 
                     <h4>10. Entregables</h4>
-                    <p>Las clases y archivos deberán estar en sus paquetes correspondientes y el repositorio debe
+                    <p>Las clases y archivos deberán estar en sus paquetes correspondientes y el repositorio
+                        debe
                         contener al menos los siguientes archivos:</p>
                     <ul>
                         <li><code>MaintenanceMetrics.java</code></li>
@@ -269,7 +299,8 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
                         <li><code>Main.java</code></li>
                         <li><code>README.md</code></li>
                     </ul>
-                    <p>El repositorio debe contener los commits realizados durante el examen y estar accesible para
+                    <p>El repositorio debe contener los commits realizados durante el examen y estar accesible
+                        para
                         revisión. Un repositorio sin código subido no será evaluado.</p>
 
                     <h4>11. Rúbrica de evaluación</h4>
@@ -285,7 +316,8 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
                         <tbody>
                             <tr>
                                 <td>Modelos e impacto</td>
-                                <td>Implementa correctamente los modelos, la composición de objetos y el cálculo del
+                                <td>Implementa correctamente los modelos, la composición de objetos y el cálculo
+                                    del
                                     impacto.</td>
                                 <td class="center">0.5 pts</td>
                             </tr>
@@ -302,13 +334,15 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
                             </tr>
                             <tr>
                                 <td>Selección y explicación técnica</td>
-                                <td>Escoge implementaciones adecuadas y justifica orden, unicidad y complejidad en el
+                                <td>Escoge implementaciones adecuadas y justifica orden, unicidad y complejidad
+                                    en el
                                     README.</td>
                                 <td class="center">2 pts</td>
                             </tr>
                             <tr>
                                 <td>Proyecto y entrega</td>
-                                <td>El proyecto compila, contiene los archivos solicitados y está disponible en GitHub.
+                                <td>El proyecto compila, contiene los archivos solicitados y está disponible en
+                                    GitHub.
                                 </td>
                                 <td class="center">0.5 pts</td>
                             </tr>
@@ -334,7 +368,14 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
     </main>
     <script src="./../js/copy-code.js"></script>
     <script src="./../js/protection.js"></script>
-    <script src="./../js/protection-security-overlay.js"></script>
+    <!-- <script src="./../js/protection-security-overlay.js"></script> -->
 </body>
 
 </html>
+
+public class MaintenanceMetrics {
+private double estimatedHours;
+private int affectedDevices;
+private int completedChecks;
+private int pendingChecks;
+}
