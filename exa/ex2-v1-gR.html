@@ -253,7 +253,10 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
 
                     <h5>Ejecución</h5>
 
-                    <p>Compilar todo el proyecto Java con las librerías JAR ubicadas en <code>lib</code>:</p>
+                    <h5>Ejecución</h5>
+
+                    <p>Compilar la clase principal, los modelos, los datos y el controlador en la carpeta
+                        <code>bin</code>:</p>
 
                     <div class="code-copy-container">
                         <button
@@ -265,11 +268,14 @@ System.out.println("URGENT: " + urgent.size());</code></pre>
                         </button>
 
                         <pre class="code-line"><code class="language-bash">mkdir -p bin
-find src -name "*.java" -print0 \
-  | xargs -0 javac --release 17 -cp "lib/*" -d bin</code></pre>
+
+javac --release 17 -d bin \
+    src/models/MaintenanceRequest.java \
+    src/models/MaintenanceMetrics.java \
+    src/data/MaintenanceData.java \
+    src/controllers/MaintenanceController.java \
+    src/Main.java</code></pre>
                     </div>
-
-
 
                     <p>Ejecutar la clase principal:</p>
 
@@ -282,20 +288,7 @@ find src -name "*.java" -print0 \
                             Copiar código
                         </button>
 
-                        <pre
-                            class="code-line"><code class="language-bash">java -cp "bin:lib/*" paquete.Main</code></pre>
-                    </div>
-
-                    <div class="code-copy-container">
-                        <button
-                            type="button"
-                            class="copy-code-button"
-                            onclick="copyCode(this)"
-                        >
-                            Copiar código
-                        </button>
-
-                        <pre class="code-line"><code class="language-bash">java -cp "bin:lib/*" paquete.App</code></pre>
+                        <pre class="code-line"><code class="language-bash">java -cp bin Main</code></pre>
                     </div>
 
                     <h4>8. README.md obligatorio</h4>
