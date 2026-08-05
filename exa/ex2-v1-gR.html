@@ -269,6 +269,8 @@ find src -name "*.java" -print0 \
   | xargs -0 javac --release 17 -cp "lib/*" -d bin</code></pre>
                     </div>
 
+
+
                     <p>Ejecutar la clase principal:</p>
 
                     <div class="code-copy-container">
@@ -282,6 +284,18 @@ find src -name "*.java" -print0 \
 
                         <pre
                             class="code-line"><code class="language-bash">java -cp "bin:lib/*" paquete.Main</code></pre>
+                    </div>
+
+                    <div class="code-copy-container">
+                        <button
+                            type="button"
+                            class="copy-code-button"
+                            onclick="copyCode(this)"
+                        >
+                            Copiar código
+                        </button>
+
+                        <pre class="code-line"><code class="language-bash">java -cp "bin:lib/*" paquete.App</code></pre>
                     </div>
 
                     <h4>8. README.md obligatorio</h4>
