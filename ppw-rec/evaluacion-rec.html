@@ -14,7 +14,7 @@
   <title>Evaluación práctica Spring Boot - Biblioteca universitaria</title>
   <link
     rel="stylesheet"
-    href="./styles-eva-rec.css"
+    href="./../css/styles-eva-rec.css"
   />
 </head>
 
@@ -55,7 +55,7 @@
         <td><strong>TIPO:</strong></td>
         <td>Evaluación práctica</td>
         <td colspan="3"><strong>TÍTULO:</strong> Modificación y ampliación de una API REST segura para biblioteca
-          universitaria</td>
+          universitariaa</td>
       </tr>
       <tr>
         <td colspan="5"><strong>OBJETIVO</strong>
@@ -431,12 +431,32 @@
               </div>
               <div class="starter-file-card">
                 <div class="starter-file-information">
-                  <strong>UserMapper.java</strong><code>src/main/java/ec/edu/ups/icc/libraryevaluation/books/mappers/UserMapper.java</code>
+                  <strong>BookMapper.java</strong><code>src/main/java/ec/edu/ups/icc/libraryevaluation/books/mappers/BookMapper.java</code>
                 </div>
                 <button
                   type="button"
                   class="copy-file-button"
                   data-copy-source="book-mapper-source"
+                  onclick="copyStarterFile(this)"
+                ><svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="copy-icon"
+                  >
+                    <path
+                      d="M8 8h11v11H8V8Zm-3 8H3V3h13v2H5v11Z"
+                      fill="currentColor"
+                    />
+                  </svg><span>Copiar contenido</span></button>
+              </div>
+              <div class="starter-file-card">
+                <div class="starter-file-information">
+                  <strong>BookRepository.java</strong><code>sssrc/main/java/ec/edu/ups/icc/libraryevaluation/books/mappers/BookRepository.java</code>
+                </div>
+                <button
+                  type="button"
+                  class="copy-file-button"
+                  data-copy-source="book-repo-source"
                   onclick="copyStarterFile(this)"
                 ><svg
                     viewBox="0 0 24 24"
@@ -549,6 +569,15 @@
             }
             }
 
+          </template>
+          <template id="book-repo-source">
+            public interface BookRepository extends JpaRepository<BookEntity, Long> {
+              List<BookEntity> findByActiveTrueAndDeletedFalseAndCopiesAvailableGreaterThanEqualOrderByTitleAsc(Integer
+                minCopies);
+                List<BookEntity>
+                  findByActiveTrueAndDeletedFalseAndCopiesAvailableLessThanOrderByCopiesAvailableAsc(Integer maxCopies);
+                  Optional<BookEntity> findByIdAndDeletedFalse(Long id);
+                    }
           </template>
           </div>
         </td>
