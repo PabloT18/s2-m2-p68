@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <meta
+    name="robots"
+    content="noindex, nofollow, noarchive"
+  />
+  <title>Evaluación práctica Spring Boot - Biblioteca universitaria</title>
+  <link
+    rel="stylesheet"
+    href="./styles-eva-rec.css"
+  />
+</head>
+
+<body>
+  <div
+    id="securityOverlay"
+    class="security-overlay"
+    aria-hidden="true"
+  >
+    <div class="security-overlay-content"><strong>Contenido temporalmente oculto</strong>
+      <p>Regrese a esta ventana para continuar.</p>
+    </div>
+  </div>
+  <main
+    class="page"
+    id="practice-content"
+  >
+    <table class="guide-table">
+      <tr>
+        <td class="logo-cell"><img
+            src="./../assets/ups-svg-plain.svg"
+            alt="Logo UPS"
+            class="logo-img"
+          ></td>
+        <td
+          colspan="4"
+          class="title-cell"
+        >FORMATO DE GUÍA DE EVALUACIÓN PRÁCTICA</td>
+      </tr>
+      <tr>
+        <td colspan="5">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>CARRERA:</strong> Computación</td>
+        <td colspan="3"><strong>ASIGNATURA:</strong> Programación y Plataformas Web</td>
+      </tr>
+      <tr>
+        <td><strong>TIPO:</strong></td>
+        <td>Evaluación práctica</td>
+        <td colspan="3"><strong>TÍTULO:</strong> Modificación y ampliación de una API REST segura para biblioteca
+          universitaria</td>
+      </tr>
+      <tr>
+        <td colspan="5"><strong>OBJETIVO</strong>
+          <p>Evaluar la configuración de una aplicación Spring Boot, la modificación de módulos existentes, la
+            construcción de consultas derivadas con Spring Data JPA y la creación de endpoints públicos y protegidos
+            documentados mediante Swagger/OpenAPI.</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="section-label">INSTRUCCIONES:</td>
+        <td
+          colspan="4"
+          class="section-content"
+        >
+          <ol>
+            <li>Utilice exclusivamente el proyecto proporcionado para <strong>Java 17</strong>.</li>
+            <li>Realizar FORK del repositorio proporcionado en el AVAC</li>
+
+            <li>Ejecute el proyecto antes de modificarlo. Inicialmente se levantará con la configuración predeterminada
+              de Spring Boot.</li>
+            <li>No modifique <code>schema.sql</code> ni <code>data.sql</code>.</li>
+            <li>No cambie rutas, parámetros, nombres JSON, mensajes, códigos internos ni códigos HTTP definidos.</li>
+            <li>Toda regla de negocio debe implementarse en la capa de servicio.</li>
+            <li>No se permite retornar entidades JPA directamente desde los controladores.</li>
+            <li>Todos los endpoints nuevos deben aparecer en Swagger UI con sus parámetros, respuestas y seguridad
+              correspondiente.</li>
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <h3>CONTEXTO DEL SISTEMA</h3>
+          <p>La universidad dispone de una API para administrar usuarios lectores, editoriales y libros. El proyecto ya
+            contiene autenticación JWT, manejo centralizado de excepciones, persistencia H2 y configuración completa de
+            Swagger/OpenAPI.</p>
+          <p>La base contiene las tablas <code>users</code>, <code>roles</code>, <code>user_roles</code>,
+            <code>publishers</code>, <code>books</code> y <code>refresh_tokens</code>. La información se carga
+            automáticamente desde los scripts ubicados en <code>src/main/resources</code>.
+          </p>
+          <div class="warning"><strong>Alcance:</strong> existen seis requerimientos. Los tres endpoints nuevos trabajan
+            exclusivamente con <code>BookEntity</code> y <code>BookRepository</code>.</div>
+
+          <h4>Credenciales iniciales</h4>
+          <table class="rubric">
+            <thead>
+              <tr>
+                <th>Rol</th>
+                <th>Correo</th>
+                <th>Contraseña</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ADMIN</td>
+                <td><code>admin@ups.edu.ec</code></td>
+                <td><code>Admin123!</code></td>
+              </tr>
+              <tr>
+                <td>LIBRARIAN</td>
+                <td><code>librarian@ups.edu.ec</code></td>
+                <td><code>Coord123!</code></td>
+              </tr>
+              <tr>
+                <td>READER</td>
+                <td><code>reader@est.ups.edu.ec</code></td>
+                <td><code>Student123!</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>Autenticación</h4>
+          <pre class="code-line">POST /api/auth/login
+{
+  "email": "admin@ups.edu.ec",
+  "password": "Admin123!"
+}</pre>
+          <h4>Swagger UI</h4>
+          <pre class="code-line">http://localhost:8080/api/swagger-ui.html</pre>
+          <p>Utilice el botón <strong>Authorize</strong> e ingrese únicamente el access token. El esquema Bearer JWT ya
+            se encuentra configurado.</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <h3>ACTIVIDADES POR DESARROLLAR</h3>
+
+          <div class="requirement"><span class="badge">R1 · 3 puntos</span>
+            <h4>Configuración del servidor</h4>
+            <p>Agregar en <code>application.yml</code> la configuración necesaria para ejecutar la API en el puerto
+              <code>8080</code> y con context path <code>/api</code>.
+            </p>
+            <p><strong>Resultado:</strong> Swagger debe quedar disponible en
+              <code>http://localhost:8080/api/swagger-ui.html</code>.
+            </p>
+          </div>
+
+
+
+          <div class="requirement">
+            <span class="badge">R2 · 3 puntos</span>
+
+            <h4>Configuración JWT</h4>
+
+            <p>
+              Al iniciar sesión correctamente, la API debe generar una respuesta como la siguiente:
+            </p>
+
+            <pre class="code-line">POST /api/auth/login
+
+{
+  "email": "admin@ups.edu.ec",
+  "password": "Admin123!"
+}</pre>
+
+            <pre class="code-line">{
+  "accessToken": "eyJhbGciOiJIUzUxMiJ9...",
+  "refreshToken": "J8kVhvz3W2QyQ1j8_KFh6x90TqzA1yWL6gx0GVMWQsc",
+  "expiresIn": 1200000
+}</pre>
+
+            <p>
+              Realizar la configuración necesaria para que el <code>accessToken</code> tenga una duración de
+              <code>1200000</code> milisegundos, equivalentes a 20 minutos.
+            </p>
+
+            <p>
+              Al decodificar el payload del JWT, el token debe contener el issuer:
+            </p>
+
+            <pre class="code-line">{
+  "iss": "ups-library-api",
+  "iat": 1785988783,
+  "exp": 1785989983
+}</pre>
+
+            <p>
+              La diferencia entre <code>exp</code> e <code>iat</code> debe ser de aproximadamente
+              <code>1200</code> segundos.
+            </p>
+
+            <p>
+              No modificar el secreto utilizado para firmar los tokens ni la expiración configurada para el
+              refresh token.
+            </p>
+
+            <p><strong>Capa afectada:</strong> configuración JWT.</p>
+          </div>
+
+          <!-- Punto 5  -->
+          <div class="requirement">
+            <span class="badge">R3 · 5 puntos</span>
+
+            <h4>Modificar usuarios activos por edad</h4>
+
+            <p> Actualmente el EndPoint esta completamente publico, debe estar protegido por Authenticación y
+              Autorización</p>
+            <p>
+              Corregir <code>GET /api/users/active-readers?minAge=21</code>.
+              El endpoint debe retornar únicamente usuarios que cumplan:
+            </p>
+
+            <ul>
+              <li><code>age &gt;= minAge</code>.</li>
+              <li><code>active = true</code>.</li>
+              <li><code>deleted = false</code>.</li>
+              <li>Ordenamiento por <code>fullName</code> ascendente.</li>
+            </ul>
+
+            <p>La respuesta actual tiene el siguiente formato:</p>
+
+            <pre class="code-line">[{
+  "id": 1,
+  "name": "Pablo Administrador",
+  "email": "admin@ups.edu.ec",
+  "age": 40,
+  "active": true
+}, ...]</pre>
+
+            <p>La respuesta esperada debe tener exactamente el siguiente contrato:</p>
+
+            <pre class="code-line">[{
+  "id": 1,
+  "fullName": "Pablo Administrador",
+  "email": "admin@ups.edu.ec",
+  "age": 40,
+  "active": true,
+  "roles": [
+    "ROLE_ADMIN"
+  ]
+}, ...]</pre>
+
+            <p>
+              El campo <code>name</code> no debe aparecer en la respuesta. Debe reemplazarse por
+              <code>fullName</code> e incluirse el listado de roles del usuario en el campo
+              <code>roles</code>.
+            </p>
+
+            <p>
+              El endpoint debe quedar accesible únicamente para usuarios con rol
+              <strong>ADMIN</strong>.
+            </p>
+
+            <p>
+              En Swagger, el endpoint debe mostrarse como una operación protegida mediante autenticación
+              Bearer JWT y debe permitir probarse utilizando el token configurado en
+              <code>bearerAuth</code>.
+            </p>
+
+            <p><strong>Capas involucradas:</strong> DTO, mapper, repository, service, controller, seguridad y Swagger.
+            </p>
+          </div>
+
+
+          <div class="requirement">
+            <span class="badge">R4 · 4 puntos</span>
+
+            <h4>Modificar consulta de editoriales</h4>
+
+            <p> Actualmente el EndPoint se consume con cualquier rol, pero si debe esta Authorizado. Debe estar
+              protegido por Autorización</p>
+            <p>
+              Corregir <code>GET /api/publishers/active?country=Ecuador</code>.
+              El endpoint debe retornar únicamente editoriales que cumplan:
+            </p>
+
+            <ul>
+              <li>El campo <code>country</code> debe coincidir con el parámetro recibido sin distinguir mayúsculas ni
+                minúsculas.</li>
+              <li><code>active = true</code>.</li>
+              <li><code>deleted = false</code>.</li>
+              <li>Ordenamiento por <code>name</code> ascendente.</li>
+            </ul>
+
+            <p>
+              La consulta debe implementarse mediante un método derivado de Spring Data JPA.
+              No se permite recuperar todos los registros y aplicar los filtros desde Java.
+            </p>
+
+            <p>
+              El endpoint debe quedar accesible únicamente para usuarios con rol
+              <strong>ADMIN</strong> o <strong>LIBRARIAN</strong>.
+            </p>
+
+            <p>
+              En Swagger, la operación debe mostrarse como protegida mediante autenticación
+              Bearer JWT y debe poder probarse utilizando el esquema
+              <code>bearerAuth</code>.
+            </p>
+
+            <p>
+              Cuando el usuario no esté autenticado, la API debe impedir el acceso.
+              Cuando esté autenticado pero no tenga alguno de los roles permitidos, debe responder con acceso denegado.
+            </p>
+
+            <p><strong>Capas involucradas:</strong> repository, service, controller, seguridad y Swagger.</p>
+          </div>
+
+          <div class="requirement"><span class="badge">R5 · 6 puntos</span>
+            <h4>Crear consulta pública del catálogo</h4>
+            <p>Crear <code>GET /api/books/catalog?minCopies=4</code>. Este endpoint debe ser público y no debe requerir
+              JWT.</p>
+            <p>Retornar libros con <code>active = true</code>, <code>deleted = false</code> y
+              <code>copiesAvailable &gt;= minCopies</code>, ordenados por <code>title</code> ascendente. Responder
+              siempre <code>200 OK</code>, incluso con lista vacía.
+            </p>
+            <p>Debe documentarse con <code>@Operation</code>, parámetro de consulta y respuesta HTTP. En OpenAPI no debe
+              declarar <code>bearerAuth</code>.</p>
+          </div>
+
+          <div class="requirement"><span class="badge">R6 · 9 puntos</span>
+            <h4>Crear operaciones protegidas de libros</h4>
+            <p>Completar el módulo <code>books</code> con repository, mapper, service, implementación, controller y
+              excepción.</p>
+
+            <h5>R6.1 Consulta protegida</h5>
+            <p>Crear <code>GET /api/books/low-stock?maxCopies=4</code>. Retornar libros con <code>active = true</code>,
+              <code>deleted = false</code> y <code>copiesAvailable &lt; maxCopies</code>, ordenados por
+              <code>copiesAvailable</code> ascendente.
+            </p>
+            <p>Solo pueden acceder <strong>ADMIN</strong> y <strong>LIBRARIAN</strong>. Debe declarar
+              <code>@SecurityRequirement(name = "bearerAuth")</code>.
+            </p>
+
+            <h5>R6.2 Desactivación lógica</h5>
+            <p>Crear <code>PATCH /api/books/{id}/deactivate</code>. Solo puede acceder <strong>ADMIN</strong>. La
+              operación debe asignar <code>active = false</code> y <code>deleted = true</code>, y retornar el DTO
+              actualizado con <code>200 OK</code>.</p>
+
+            <p>El meotodo JPA:</p>
+            <ul>
+              <li>findByAgeGreaterThanEqual</li>
+              <li>AndActiveTrue</li>
+              <li>AndDeletedFalse</li>
+              <li>OrderByFullNameAsc</li>
+
+            </ul>
+
+            <p>Condiciones:</p>
+            <ul>
+              <li>Si el libro no existe o ya está eliminado: <code>404</code>, código <code>BOOK_NOT_FOUND</code>,
+                mensaje <code>Book not found</code>.</li>
+              <li>Si <code>copiesAvailable &gt; 0</code>: <code>409</code>, código <code>BOOK_CONFLICT</code>, mensaje
+                <code>Book cannot be deactivated while copies are available</code>.
+              </li>
+            </ul>
+            <p>Crear <code>BookConflictException</code> extendiendo <code>ApplicationException</code>. Documentar en
+              Swagger las respuestas <code>200</code>, <code>404</code> y <code>409</code>, además de la seguridad
+              Bearer.</p>
+
+            < class="starter-files">
+              <h5>Archivos iniciales proporcionados</h5>
+              <p class="starter-files-description">Cree los archivos en las rutas indicadas y utilice el botón para
+                copiar el contenido.</p>
+              <div class="starter-file-card">
+                <div class="starter-file-information">
+                  <strong>BookEntity.java</strong><code>src/main/java/ec/edu/ups/icc/libraryevaluation/books/entities/BookEntity.java</code>
+                </div>
+                <button
+                  type="button"
+                  class="copy-file-button"
+                  data-copy-source="book-entity-source"
+                  onclick="copyStarterFile(this)"
+                ><svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="copy-icon"
+                  >
+                    <path
+                      d="M8 8h11v11H8V8Zm-3 8H3V3h13v2H5v11Z"
+                      fill="currentColor"
+                    />
+                  </svg><span>Copiar contenido</span></button>
+              </div>
+              <div class="starter-file-card">
+                <div class="starter-file-information">
+                  <strong>BookResponseDto.java</strong><code>src/main/java/ec/edu/ups/icc/libraryevaluation/books/dtos/BookResponseDto.java</code>
+                </div>
+                <button
+                  type="button"
+                  class="copy-file-button"
+                  data-copy-source="book-response-source"
+                  onclick="copyStarterFile(this)"
+                ><svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="copy-icon"
+                  >
+                    <path
+                      d="M8 8h11v11H8V8Zm-3 8H3V3h13v2H5v11Z"
+                      fill="currentColor"
+                    />
+                  </svg><span>Copiar contenido</span></button>
+              </div>
+              <div class="starter-file-card">
+                <div class="starter-file-information">
+                  <strong>BookConflictException.java</strong><code>src/main/java/ec/edu/ups/icc/libraryevaluation/books/exceptions/BookConflictException.java</code>
+                </div>
+                <button
+                  type="button"
+                  class="copy-file-button"
+                  data-copy-source="book-exception-source"
+                  onclick="copyStarterFile(this)"
+                ><svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="copy-icon"
+                  >
+                    <path
+                      d="M8 8h11v11H8V8Zm-3 8H3V3h13v2H5v11Z"
+                      fill="currentColor"
+                    />
+                  </svg><span>Copiar contenido</span></button>
+              </div>
+              <div class="starter-file-card">
+                <div class="starter-file-information">
+                  <strong>UserMapper.java</strong><code>src/main/java/ec/edu/ups/icc/libraryevaluation/books/mappers/UserMapper.java</code>
+                </div>
+                <button
+                  type="button"
+                  class="copy-file-button"
+                  data-copy-source="book-mapper-source"
+                  onclick="copyStarterFile(this)"
+                ><svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="copy-icon"
+                  >
+                    <path
+                      d="M8 8h11v11H8V8Zm-3 8H3V3h13v2H5v11Z"
+                      fill="currentColor"
+                    />
+                  </svg><span>Copiar contenido</span></button>
+              </div>
+          </div>
+          </div>
+
+          <template id="book-entity-source">package ec.edu.ups.icc.libraryevaluation.books.entities;
+
+            import java.math.BigDecimal;
+            import ec.edu.ups.icc.libraryevaluation.core.entities.BaseEntity;
+            import jakarta.persistence.Column;
+            import jakarta.persistence.Entity;
+            import jakarta.persistence.Table;
+
+            @Entity
+            @Table(name = "books")
+            public class BookEntity extends BaseEntity {
+            @Column(nullable = false, unique = true, length = 20)
+            private String isbn;
+
+            @Column(nullable = false, length = 160)
+            private String title;
+
+            @Column(nullable = false, length = 120)
+            private String author;
+
+            @Column(nullable = false, length = 80)
+            private String category;
+
+            @Column(name = "copies_available", nullable = false)
+            private Integer copiesAvailable;
+
+            @Column(nullable = false, precision = 10, scale = 2)
+            private BigDecimal price;
+
+            @Column(nullable = false)
+            private boolean active = true;
+
+            public String getIsbn() { return isbn; }
+            public void setIsbn(String isbn) { this.isbn = isbn; }
+            public String getTitle() { return title; }
+            public void setTitle(String title) { this.title = title; }
+            public String getAuthor() { return author; }
+            public void setAuthor(String author) { this.author = author; }
+            public String getCategory() { return category; }
+            public void setCategory(String category) { this.category = category; }
+            public Integer getCopiesAvailable() { return copiesAvailable; }
+            public void setCopiesAvailable(Integer copiesAvailable) { this.copiesAvailable = copiesAvailable; }
+            public BigDecimal getPrice() { return price; }
+            public void setPrice(BigDecimal price) { this.price = price; }
+            public boolean isActive() { return active; }
+            public void setActive(boolean active) { this.active = active; }
+            }
+          </template>
+          <template id="book-response-source">package ec.edu.ups.icc.libraryevaluation.books.dtos;
+
+            import java.math.BigDecimal;
+
+            public record BookResponseDto(
+            Long id,
+            String isbn,
+            String title,
+            String author,
+            String category,
+            Integer copiesAvailable,
+            BigDecimal price,
+            Boolean active
+            ) {}
+          </template>
+          <template id="book-exception-source">ppackage ec.edu.ups.icc.libraryevaluation.books.exceptions;
+
+            import org.springframework.http.HttpStatus;
+            import ec.edu.ups.icc.libraryevaluation.core.exceptions.base.ApplicationException;
+
+            public class BookConflictException extends ApplicationException {
+            public BookConflictException(String message) {
+            super(HttpStatus.CONFLICT, "BOOK_CONFLICT", message);
+            }
+            }
+          </template>
+          <template id="book-mapper-source">package ec.edu.ups.icc.libraryevaluation.users.mappers;
+
+            import java.util.stream.Collectors;
+            import ec.edu.ups.icc.libraryevaluation.users.dtos.UserResponseDto;
+            import ec.edu.ups.icc.libraryevaluation.users.entities.UserEntity;
+
+            public final class UserMapper {
+            private UserMapper() {}
+
+            public static UserResponseDto toResponse(UserEntity entity) {
+            return new UserResponseDto(
+            entity.getId(),
+            entity.getFullName(),
+            entity.getEmail(),
+            entity.getAge(),
+            entity.isActive(),
+            entity.getRoles().stream()
+            .map(role -> role.getName().name())
+            .collect(Collectors.toSet())
+            );
+            }
+            }
+
+          </template>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <h3>ESTRUCTURA ESPERADA DEL MÓDULO BOOKS</h3>
+          <pre class="code-line">books/
+├── controllers
+├── dtos
+├── entities
+├── exceptions
+├── mappers
+├── repositories
+└── services</pre>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <h3>CRITERIOS DE EVALUACIÓN</h3>
+          <table class="rubric">
+            <thead>
+              <tr>
+                <th>Requerimiento</th>
+                <th>Puntaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>R1 Puerto y context path</td>
+                <td class="center">3</td>
+              </tr>
+              <tr>
+                <td>R2 Expiración e issuer JWT</td>
+                <td class="center">3</td>
+              </tr>
+              <tr>
+                <td>R3 Usuarios activos por edad</td>
+                <td class="center">5</td>
+              </tr>
+              <tr>
+                <td>R4 Editoriales activas por país</td>
+                <td class="center">4</td>
+              </tr>
+              <tr>
+                <td>R5 Catálogo público y Swagger</td>
+                <td class="center">6</td>
+              </tr>
+              <tr>
+                <td>R6 Consulta protegida, desactivación, excepciones y Swagger</td>
+                <td class="center">9</td>
+              </tr>
+              <tr>
+                <td><strong>TOTAL</strong></td>
+                <td class="center"><strong>30</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <h3>ENTREGA</h3>
+          <ol>
+            <li>Subir el enlace en el AVAC en la pregunta de la evaluación.</li>
+            <li>El poryecto debera compilat y tener la configurarión necesaria </li>
+            <li>Realizar commits y push periodicamente.</li>
+            <li><strong>No se permite commits desde otras maquinas</strong>Si se verifica commits desde otras maauinas
+              se considera copia de examen, por lo que la calificaión sera de <strong>0</strong>
+            </li>
+          </ol>
+        </td>
+      </tr>
+    </table>
+    <div style="text-align:center;margin:18px auto">
+      <p class="signature">Docente: Ing. Pablo Torres Mgtr.</p>
+      <p>Firma: _______________________________</p>
+    </div>
+    <div class="footer"><span>Formato aprobado con Res. C.S. N° 076-04-2016-04-20</span><span>Evaluación práctica</span>
+    </div>
+  </main>
+  <script src="./../js/protection-security-overlay.js"></script>
+  <script src="./../js/protection.js"></script>
+  <script>
+    async function copyStarterFile(button) {
+      const source = document.getElementById(button.dataset.copySource);
+      const text = button.querySelector("span");
+      if (!source) { showCopyStatus(button, text, "No se encontró el contenido", "copy-error"); return; }
+      const content = source.content.textContent.replace(/^\s*\n/, "").replace(/\s+$/, "");
+      try { await copyTextToClipboard(content); showCopyStatus(button, text, "Contenido copiado", "copy-success"); }
+      catch (error) { console.error(error); showCopyStatus(button, text, "Error al copiar", "copy-error"); }
+    }
+    async function copyTextToClipboard(content) {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") { await navigator.clipboard.writeText(content); return; }
+      const textarea = document.createElement("textarea"); textarea.value = content; textarea.setAttribute("readonly", ""); textarea.style.position = "fixed"; textarea.style.top = "-9999px"; document.body.appendChild(textarea); textarea.select(); const copied = document.execCommand("copy"); document.body.removeChild(textarea); if (!copied) throw new Error("Copia rechazada");
+    }
+    function showCopyStatus(button, text, message, className) { button.classList.remove("copy-success", "copy-error"); button.classList.add(className); text.textContent = message; setTimeout(() => { button.classList.remove("copy-success", "copy-error"); text.textContent = "Copiar contenido"; }, 2000); }
+  </script>
+</body>
+
+</html>
